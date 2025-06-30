@@ -41,5 +41,5 @@ Organizado por semanas/dias, com arquivos, projetos e anotações:
 
 ## 🧠 Status atual
 
-- ✅ Dia 1: Fundamentos de JavaScript iniciado!
+- ✅ Dia 1: Fundamentos de JavaScript - variáveis, tipos, operadores e console.log formatado.
 - 🔄 Progresso contínuo até agosto (vou atualizando o repositório diariamente)
