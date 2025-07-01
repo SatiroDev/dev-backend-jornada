@@ -43,4 +43,5 @@ Organizado por semanas/dias, com arquivos, projetos e anotações:
 
 - ✅ Dia 1: Fundamentos de JavaScript - variáveis, tipos, operadores e console.log formatado.
 - ✅ Dia 2: Estudo de condicionais (if, else, switch) com cálculo de valor final baseado no tipo de pagamento.
+- ✅ Dia 3: Funções, arrays e laço for – simulação de vendas com múltiplos clientes e regras de pagamento.
 - 🔄 Progresso contínuo até agosto (vou atualizando o repositório diariamente)
