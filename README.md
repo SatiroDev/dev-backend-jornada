@@ -4,7 +4,7 @@
 
 ## 👤 Sobre mim
 
-Meu nome é José Satiro, tenho 17 anos, estudo no IFCE (campus Maranguape) e estou aprendendo programação com foco em **trabalhar com back-end ainda este ano**.  
+Meu nome é José Satiro, tenho 17 anos, estudo no IFCE (campus Maranguape).
 Criei este repositório como forma de me organizar, praticar diariamente e compartilhar meu progresso.
 
 ## 🎯 Objetivo
