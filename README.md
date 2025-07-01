@@ -42,4 +42,5 @@ Organizado por semanas/dias, com arquivos, projetos e anotações:
 ## 🧠 Status atual
 
 - ✅ Dia 1: Fundamentos de JavaScript - variáveis, tipos, operadores e console.log formatado.
+- ✅ Dia 2: Estudo de condicionais (if, else, switch) com cálculo de valor final baseado no tipo de pagamento.
 - 🔄 Progresso contínuo até agosto (vou atualizando o repositório diariamente)
