@@ -1,0 +1,14 @@
+[
+  {
+    "cliente": "José",
+    "qnt_garrafas": 3,
+    "tipo_pagamento": "pix",
+    "valor_total": 13.5
+  },
+  {
+    "cliente": "João",
+    "qnt_garrafas": 5,
+    "tipo_pagamento": "dinheiro",
+    "valor_total": 25
+  }
+]
