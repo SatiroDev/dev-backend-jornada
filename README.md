@@ -46,4 +46,5 @@ Organizado por semanas/dias, com arquivos, projetos e anotações:
 - ✅ Dia 3: Funções, arrays e laço for – simulação de vendas com múltiplos clientes e regras de pagamento.
 - ✅ Dia 4: Refatoração com objetos e array de objetos – estrutura mais realista e legível para dados de clientes.
 - ✅ Dia 5: Simulação de login com usuário e senha fixos + organização em múltiplos arquivos usando require e module.exports.
+- ✅ Dia 6: Validação de dados de entrada + proteção de senha com hash usando bcrypt.
 - 🔄 Progresso contínuo até agosto (vou atualizando o repositório diariamente)
