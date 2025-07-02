@@ -45,4 +45,5 @@ Organizado por semanas/dias, com arquivos, projetos e anotações:
 - ✅ Dia 2: Estudo de condicionais (if, else, switch) com cálculo de valor final baseado no tipo de pagamento.
 - ✅ Dia 3: Funções, arrays e laço for – simulação de vendas com múltiplos clientes e regras de pagamento.
 - ✅ Dia 4: Refatoração com objetos e array de objetos – estrutura mais realista e legível para dados de clientes.
+- ✅ Dia 5: Simulação de login com usuário e senha fixos + organização em múltiplos arquivos usando require e module.exports.
 - 🔄 Progresso contínuo até agosto (vou atualizando o repositório diariamente)
