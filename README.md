@@ -47,4 +47,36 @@ Organizado por semanas/dias, com arquivos, projetos e anotações:
 - ✅ Dia 4: Refatoração com objetos e array de objetos – estrutura mais realista e legível para dados de clientes.
 - ✅ Dia 5: Simulação de login com usuário e senha fixos + organização em múltiplos arquivos usando require e module.exports.
 - ✅ Dia 6: Validação de dados de entrada + proteção de senha com hash usando bcrypt.
-- 🔄 Progresso contínuo até agosto (vou atualizando o repositório diariamente)
+- ✅ Dia 7: Projeto final da semana 1 –  
+  Sistema de Cadastro, Login e Vendas com persistência em arquivos JSON e autenticação com bcrypt  
+
+---
+
+## 📂 Projeto do Dia 7
+
+### Sistema de Cadastro, Login e Vendas
+
+Projeto desenvolvido para gerenciar usuários com senha criptografada usando bcrypt e registrar vendas com persistência em arquivos JSON.
+
+### Funcionalidades
+
+- Cadastro de usuários com validação básica  
+- Criptografia de senha com bcrypt  
+- Login autenticando com senha criptografada  
+- Registro de vendas com cálculo de valor final considerando forma de pagamento  
+- Persistência dos dados de usuários e vendas em arquivos JSON  
+
+### Tecnologias
+
+- Node.js  
+- bcrypt  
+- File System (fs/promises)  
+
+### Como executar
+
+1. Instale as dependências com `npm install`.  
+2. Execute o arquivo principal com `node <nome_do_arquivo>.js`.  
+
+---
+
+🔄 Progresso contínuo até agosto (vou atualizando o repositório diariamente)
