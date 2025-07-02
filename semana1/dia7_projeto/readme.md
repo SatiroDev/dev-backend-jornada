@@ -23,7 +23,7 @@ Projeto desenvolvido para gerenciar usuários com senha criptografada usando bcr
 
 ### Como executar
 
-1. Instale as dependências com `npm install`.  
+1. Instale as dependências como `npm install`.  
 2. Execute o arquivo principal com `node <nome_do_arquivo>.js`.  
 
 ---
