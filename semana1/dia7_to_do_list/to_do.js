@@ -2,7 +2,7 @@ const prompt = require('prompt-sync')()
 
 async function main() {
     const fs = require('fs/promises')
-
+    const fsSync = require('fs')
     function menu() {
         console.log('-=-'.repeat(10))
         console.log('-=-=-=-=-=-= MENU =-=-=-=-=-=-')
@@ -23,11 +23,20 @@ async function main() {
         }
         return true
     }
+
+    async function iniciarArquivos() {
+        if (!fsSync.existsSync('tarefas.json')){
+            await fs.writeFile('tarefas.json', '[]')
+        }
+    }
+
     async function salvarInformacoes(lista) {
-        await fs.writeFile('semana1/dia7_to_do_list/tarefas.json', JSON.stringify(lista, null, 2))
+        await iniciarArquivos()
+        await fs.writeFile('tarefas.json', JSON.stringify(lista, null, 2))
     }
     async function carregarTarefas() {
-        let conteudo = await fs.readFile('semana1/dia7_to_do_list/tarefas.json', 'utf-8')
+        await iniciarArquivos()
+        let conteudo = await fs.readFile('tarefas.json', 'utf-8')
         return JSON.parse(conteudo)
     }
 
@@ -164,4 +173,5 @@ async function main() {
         }
     }
 }
+
 main()
