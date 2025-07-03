@@ -1,23 +1,59 @@
-
+const prompt = require('prompt-sync')()
 const bcrypt = require('bcrypt')
+
+
 async function main() {
     const fs = require('fs/promises')
+    const fsSync = require('fs')
+
+    async function iniciarArquivos() {
+        if (!fsSync.existsSync('bd_usuarios.json')) {
+            await fs.writeFile('bd_usuarios.json', '[]')
+        }
+        if (!fsSync.existsSync('bd_vendas.json')) {
+            await fs.writeFile('bd_vendas.json', '[]')
+        }
+    }
+
+    async function menu() {
+        console.log(' --- MENU --- ')
+        console.log('1. Criar uma conta')
+        console.log('2. Fazer login')
+        let opcao = prompt('Escolha uma opção: ')
+        return opcao
+    }
+
+    async function criarConta() {
+        let nomeUser = prompt('Digite um nome de usuário para criar: ')
+        let senharUser = prompt('Digite uma senha: ')
+        return [nomeUser, senharUser]
+    }
+
+    async function fazerLogin() {
+        let nomeDigitado = prompt('Digite o nome de usuário para fazer login: ')
+        let senhaDigitada = prompt('Digite a senha: ')
+        return [nomeDigitado, senhaDigitada]
+    }
 
     async function lerUsers() {
-        let conteudo = await fs.readFile('semana1/dia7_projeto/bd_usuarios.json', 'utf-8')
+        await iniciarArquivos()
+        let conteudo = await fs.readFile('bd_usuarios.json', 'utf-8')
         return JSON.parse(conteudo)
     }
     async function lerVendas() {
-        let conteudo = await fs.readFile('semana1/dia7_projeto/bd_vendas.json', 'utf-8')
+        await iniciarArquivos()
+        let conteudo = await fs.readFile('bd_vendas.json', 'utf-8')
         return JSON.parse(conteudo)
     }
 
     async function salvarUsers(lista) {
-        await fs.writeFile('semana1/dia7_projeto/bd_usuarios.json', JSON.stringify(lista, null, 2))
+        await iniciarArquivos()
+        await fs.writeFile('bd_usuarios.json', JSON.stringify(lista, null, 2))
     }
 
     async function salvarVendas(lista) {
-        await fs.writeFile('semana1/dia7_projeto/bd_vendas.json', JSON.stringify(lista, null, 2))
+        await iniciarArquivos()
+        await fs.writeFile('bd_vendas.json', JSON.stringify(lista, null, 2))
     }
 
     function validarCadastro(nome, senha) {
@@ -65,29 +101,69 @@ async function main() {
         }
         return valor_final
     }
+    let escolha = 's'
+    while (escolha != 'n') {
+        const user = await lerUsers()
+        const historico_vendas = await lerVendas()
 
-    const user = await lerUsers()
-    const historico_vendas = await lerVendas()
+        let opcao = await menu()
 
-    let nomeUser = 'admin'
-    let senharUser = '1234'
-    if (validarCadastro(nomeUser, senharUser)) {
-        let hash = await bcrypt.hash (senharUser, 10) 
-        user.push({ nome: nomeUser, senha: hash })
-        await salvarUsers(user)
-        console.log(`Usuário "${nomeUser}" criado com sucesso!`)
-        console.log()
-        let nomeDigitado = 'admin'
-        let senhaDigitada = '1234'
-        let veri_ok = await verificarUser(user, nomeDigitado, senhaDigitada)
-        if (veri_ok) {
-            console.log('Login realizado!')
+        let verificacao_geral = false
+
+        let validacao = false
+        if (opcao === '1') {
+            let informacoes = await criarConta()
+            if (validarCadastro(informacoes[0], informacoes[1])) {
+                let hash = await bcrypt.hash (informacoes[1], 10) 
+                for (let i = 0; i < user.length; i++) {
+                    let usuario = user[i]
+                    if (informacoes[0] === usuario.nome) {
+                        validacao = true
+                    }
+                }
+                if (!validacao) {
+                    user.push({ nome: informacoes[0], senha: hash })
+                    await salvarUsers(user)
+                    console.log(`Usuário "${informacoes[0]}" criado com sucesso!`)
+                    verificacao_geral = true
+                    console.log()
+                }
+                else {
+                    console.log(`Usuário "${informacoes[0]}" já criado!`)
+                    console.log()
+                    let senhaDigitada = prompt('Digite a senha para fazer login: ')
+                    let result = await verificarUser(user, informacoes[0], senhaDigitada)
+                    if (result) {
+                        verificacao_geral = true
+                        console.log('Login realizado!')
+                        console.log()
+                    }
+                   
+                }
+            }
+        }
+        else if (opcao === '2') {
             console.log()
-            let nome_cliente = 'Jorge'
-            let qnt_garrafas = 5
-            let tp_pagamento = 'dinheir'
+            let login = await fazerLogin()
+            let veri_ok = await verificarUser(user, login[0], login[1])
+            if (veri_ok) {
+                verificacao_geral = true
+                console.log('Login realizado!')
+                console.log()
+            }
+            else {
+                console.log('Erro ao fazer login!')
+            }
+        } 
+        else {
+            console.log(`Opção "${opcao}" inválida!`)
+        }
+        if (verificacao_geral) {
+            let nome_cliente = prompt('Digite o nome do cliente: ')
+            let qnt_garrafas = prompt('Quantidade de garrafas compradas: ')
+            let tp_pagamento = prompt('Tipo de pagamento usado: ').toLowerCase()
             let total_a_pagar = valor_a_pagar(tp_pagamento, qnt_garrafas)
-            if (total_a_pagar != false) {
+            if (total_a_pagar) {
                 console.log(`Registrando venda de ${qnt_garrafas} garrafas para o(a) cliente "${nome_cliente}"...`)
 
                 historico_vendas.push({cliente: nome_cliente, qnt_garrafas: qnt_garrafas, tipo_pagamento: tp_pagamento, valor_total: total_a_pagar})
@@ -102,11 +178,11 @@ async function main() {
                 let cliente = historico_vendas[i]
                 console.log(`- Cliente: ${cliente.cliente} | Quantidade: ${cliente.qnt_garrafas} | Total: R$${cliente.valor_total.toFixed(2)}`)
             }
+            
         }
-        else { 
-            console.log('Erro ao fazer login!')
-        }
+        escolha = prompt('Usar programa novamente: digite "s" ou "n": ').toLowerCase()
     }
+    console.log('Saindo...')
 }
 
 main()
