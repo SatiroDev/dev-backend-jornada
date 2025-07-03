@@ -19,6 +19,7 @@
   "homepage": "https://github.com/SatiroDev/dev-backend-jornada#readme",
   "dependencies": {
     "bcrypt": "^6.0.0",
+    "express": "^5.1.0",
     "prompt-sync": "^4.2.0"
   }
 }
