@@ -30,7 +30,7 @@ Este projeto simula um sistema simples de **cadastro de usuários com senha crip
 .
 ├── bd_usuarios.json
 ├── bd_vendas.json
-├── cadastro_login_vendas.js
+└── cadastro_login_vendas.js
 ```
 
 ---
