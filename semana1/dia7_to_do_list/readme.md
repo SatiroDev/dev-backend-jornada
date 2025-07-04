@@ -28,8 +28,8 @@ Este projeto é uma aplicação simples de **gerenciamento de tarefas** feita em
 ```
 .
 ├── tarefas.json
-├── to_do_list.js
-└── README.md
+└──to_do_list.js
+
 ```
 
 ---
