@@ -1,0 +1,32 @@
+[
+  {
+    "id": 3,
+    "nome": "Pizza",
+    "preco": 28,
+    "quantidade": 1
+  },
+  {
+    "id": 4,
+    "nome": "mini bolo",
+    "preco": 11,
+    "quantidade": 1
+  },
+  {
+    "id": 5,
+    "nome": "São Gerardo (refrigerante)",
+    "preco": 9,
+    "quantidade": 2
+  },
+  {
+    "id": 6,
+    "nome": "Celular",
+    "preco": 1000,
+    "quantidade": 1
+  },
+  {
+    "id": 1,
+    "nome": "garrafa",
+    "preco": 4.5,
+    "quantidade": 3
+  }
+]
