@@ -1,9 +1,10 @@
 {
   "name": "dev-backend-jornada",
   "version": "1.0.0",
+  "type": "module",
   "description": "> Repositório criado para acompanhar minha jornada de aprendizado focada em **Desenvolvimento Back-End com Node.js**, iniciada em junho de 2025.",
-  "main": "index.js",
   "scripts": {
+    "dev": "nodemon semana2/express/mini_desafios/desafio01.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -22,5 +23,8 @@
     "express": "^5.1.0",
     "prompt-sync": "^4.2.0"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+
 }

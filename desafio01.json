@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "nome": "Celular",
+    "preco": 1000,
+    "quantidade": 1
+  },
+  {
+    "id": 2,
+    "nome": "Teclado",
+    "preco": 150,
+    "quantidade": 2
+  },
+  {
+    "id": 3,
+    "nome": "Mouse",
+    "preco": 100,
+    "quantidade": 3
+  }
+]
