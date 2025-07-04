@@ -41,6 +41,9 @@ Organizado por semanas/dias, com arquivos, projetos e anotações:
 
 ## 🧠 Status atual
 
+### 📦 **Semana 1 — Fundamentos do Node.js, Lógica de Programação e Criptografia com Bcrypt**
+
+
 - ✅ Dia 1: Fundamentos de JavaScript - variáveis, tipos, operadores e console.log formatado.
 - ✅ Dia 2: Estudo de condicionais (if, else, switch) com cálculo de valor final baseado no tipo de pagamento.
 - ✅ Dia 3: Funções, arrays e laço for – simulação de vendas com múltiplos clientes e regras de pagamento.
@@ -49,4 +52,10 @@ Organizado por semanas/dias, com arquivos, projetos e anotações:
 - ✅ Dia 6: Validação de dados de entrada + proteção de senha com hash usando bcrypt.
 - ✅ Dia 7: Projeto final da semana 1 –  
   Sistema de Cadastro, Login e Vendas com persistência em arquivos JSON e autenticação com bcrypt  
+
+### 🌐 **Semana 2 — APIs com Express.js, Métodos HTTP e Persistência de Dados com JSON**
+
+- ✅ Dia 1: Introdução ao Express.js – criação de rotas com métodos GET, POST, PUT e DELETE, uso do Postman e leitura/escrita de arquivos JSON.
+
+
 🔄 Progresso contínuo até agosto (vou atualizando o repositório diariamente)
