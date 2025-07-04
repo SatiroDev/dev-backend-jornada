@@ -35,19 +35,21 @@ Este projeto é uma API RESTful feita com **Node.js** e **Express** que simula u
 
 ## 🚀 Como executar
 
-1. Instale as dependências:
+1. Instale as dependências do projeto:
 
 ```bash
 npm install express
 ```
 
-2. Execute o servidor:
+2. Crie um arquivo chamado `relatorio_valor_total_estoque.js` e cole dentro dele todo o código do projeto.
+
+3. Execute o projeto com o Node.js:
 
 ```bash
-node app.js
+node relatorio_valor_total_estoque.js
 ```
 
-3. Use uma ferramenta como o [Postman](https://www.postman.com/) ou o [Insomnia](https://insomnia.rest/) para interagir com os endpoints da API.
+4. Use uma ferramenta como o [Postman](https://www.postman.com/) ou o [Insomnia](https://insomnia.rest/) para interagir com os endpoints da API.
 
 ---
 
