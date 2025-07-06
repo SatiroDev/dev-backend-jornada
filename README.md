@@ -11,7 +11,7 @@ Criei este repositório como forma de me organizar, praticar diariamente e compa
 
 - Aprender JavaScript moderno
 - Desenvolver APIs REST com Node.js + Express
-- Usar banco de dados (MongoDB)
+- Usar banco de dados (MySQL)
 - Criar e documentar projetos reais
 - Conseguir estágio ou trabalho na área até agosto/2025
 
