@@ -1,28 +1,26 @@
-// import { conexao } from './conexao.js';
+import { conexao } from './conexao.js';
 
-// export const livrosCadastrados = async () => {
-//     const [criarTabela] = await conexao.execute(
-//         ` create table if not exists livros (
-//             id int primary key auto_increment,
-//             titulo varchar(150) not null,
-//             autor varchar(150) not null,
-//             ano date not null,
-//             genero varchar(80) not null,
-//             quantidade_estoque int not null
-//         )`
-//     )
-//     const [tabela] = await conexao.execute(
-//         'select * from livros'
-//     )
-//     return tabela
-// }
+export const livrosCadastrados = async () => {
+    const [criarTabela] = await conexao.execute(
+        ` create table if not exists livros (
+            id int primary key auto_increment,
+            titulo varchar(150) not null,
+            autor varchar(150) not null,
+            ano date not null,
+            genero varchar(80) not null,
+            quantidade_estoque int not null
+        )`
+    )
+    const [tabela] = await conexao.execute(
+        'select * from livros'
+    )
+    return tabela
+}
 
-// export const listarLivros = async(livros) => {
+export const listarLivros = async(livros) => {
+    
+}
 
-// }
-
-let num = 1.12
-console.log(parseInt(num))
 
 // 💡 Desafio: Sistema de Gerenciamento de Livros (Back-End com Express + MySQL)
 
