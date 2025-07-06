@@ -34,7 +34,7 @@ Organizado por semanas/dias, com arquivos, projetos e anotações:
 - JavaScript (ES6+)
 - Node.js
 - Express
-- MongoDB com Mongoose
+- MySQL
 - Git e GitHub
 - Postman
 - Deploy com Render / Railway
