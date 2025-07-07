@@ -1,4 +1,3 @@
-import { authPlugins } from 'mysql2';
 import { conexao } from './conexao.js';
 
 export const livrosCadastrados = async () => {
@@ -57,6 +56,22 @@ export const atualizarInformacao = async (informacao, id, campo) => {
             where id = ?`,
             [informacao[i],id]
         )
+        if (campo[i] === "quantidade_estoque") {
+            if (informacao[i] >=1){
+                const [atualizacaoDisponivel] = await conexao.execute(
+                    `update livros set disponivel = "true"
+                    where id = ?`,
+                    [id]
+                )
+            }
+            else {
+                const [atualizacaoDisponivel] = await conexao.execute(
+                    `update livros set disponivel = "false"
+                    where id = ?`,
+                    [id]
+                )
+            }
+        }
         if (atualizar) {
             verificacaoQuantidade += 1
         }
@@ -75,32 +90,10 @@ export const deletarLivro = async (id) => {
     return true
 }
 
-
-// 💡 Desafio: Sistema de Gerenciamento de Livros (Back-End com Express + MySQL)
-
-
-// ---
-
-// 📌 Requisitos principais:
-
-// 1. Banco de Dados: -> feito
-
-// GET /livros: lista todos os livros ou filtra por título, autor, ano ou gênero (usando query params). -> feito
-
-// GET /livros/:id: mostra os dados de um único livro. -> feito
-
-// POST /livros: cadastra um novo livro. -> feito
-
-// PUT /livros/:id: atualiza qualquer informação de um livro. -> feito
-
-// DELETE /livros/:id: remove o livro do sistema. -> feito
-
-
-
-// 3. Extras para nível hard (opcional):
-
-// Adicione um campo disponível e altere automaticamente para false se quantidade_estoque for 0.
-
-// Faça validações no cadastro (campos obrigatórios, ano numérico, etc).
-
-// Ordenação por ano ou título (?ordenar=ano ou ?ordenar=titulo).
+export const ordenarConsulta = async (campo) => {
+    const [ordenar] = await conexao.execute(
+        `select * from livros
+        order by ${campo}`
+    )
+    return ordenar
+}
