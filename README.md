@@ -56,6 +56,7 @@ Organizado por semanas/dias, com arquivos, projetos e anotações:
 ### 🌐 **Semana 2 — APIs com Express.js, Métodos HTTP e Persistência de Dados com JSON**
 
 - ✅ Dia 1: Introdução ao Express.js – criação de rotas com métodos GET, POST, PUT e DELETE, uso do Postman e leitura/escrita de arquivos JSON.
-
+- ✅ Dia 2: Manipulação avançada de dados – filtros dinâmicos em rotas GET, validação de dados e uso de async/await para controle assíncrono.  
+- ✅ Dia 3: Integração com banco de dados MySQL – conexão com MySQL, criação de tabelas, consultas parametrizadas e persistência real de dados.  
 
 🔄 Progresso contínuo até agosto (vou atualizando o repositório diariamente)
