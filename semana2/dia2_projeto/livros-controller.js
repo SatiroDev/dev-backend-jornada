@@ -9,7 +9,8 @@ export const livrosCadastrados = async () => {
             autor varchar(150) not null,
             ano int not null,
             genero varchar(80) not null,
-            quantidade_estoque int not null
+            quantidade_estoque int not null,
+            disponivel varchar(20)
         )`
     )
     const [tabela] = await conexao.execute(
@@ -35,25 +36,43 @@ export const cadastrarLivro = async(titulo, autor, ano, genero, quantidade_estoq
     genero = genero.toString()
     ano = parseInt(ano)
     quantidade_estoque = parseInt(quantidade_estoque)
+    let disponivel = "false"
+    if (quantidade_estoque > 0) {
+        disponivel = "true"
+    }
 
     const [insert] = await conexao.execute(
-        `insert into livros (titulo, autor, ano, genero, quantidade_estoque)
-        values (?, ?, ?, ?, ?)`,
-        [titulo, autor, ano, genero, quantidade_estoque]
+        `insert into livros (titulo, autor, ano, genero, quantidade_estoque, disponivel)
+        values (?, ?, ?, ?, ?, ?)`,
+        [titulo, autor, ano, genero, quantidade_estoque, disponivel]
     )
     return insert
 }
 
 export const atualizarInformacao = async (informacao, id, campo) => {
-    console.log(informacao)
-    console.log(id)
-    console.log(campo)
-    const [atualizar] = await conexao.execute(
-        `update livros set (?) = ?
-        where id = ?`,
-        [campo,informacao,id]
+    let verificacaoQuantidade = 0
+    for (let i = 0; i < campo.length; i ++) {
+        const [atualizar] = await conexao.execute(
+            `update livros set ${campo[i]} = ?
+            where id = ?`,
+            [informacao[i],id]
+        )
+        if (atualizar) {
+            verificacaoQuantidade += 1
+        }
+    }
+    if (verificacaoQuantidade !== informacao.length || campo.length === 0) {
+        return false
+    }
+    return true
+}
+
+export const deletarLivro = async (id) => {
+    const [deletar] = await conexao.execute(
+        `delete from livros where id = ?`,
+        [id]
     )
-    console.log(atualizar)
+    return true
 }
 
 
@@ -72,9 +91,9 @@ export const atualizarInformacao = async (informacao, id, campo) => {
 
 // POST /livros: cadastra um novo livro. -> feito
 
-// PUT /livros/:id: atualiza qualquer informação de um livro.
+// PUT /livros/:id: atualiza qualquer informação de um livro. -> feito
 
-// DELETE /livros/:id: remove o livro do sistema.
+// DELETE /livros/:id: remove o livro do sistema. -> feito
 
 
 
