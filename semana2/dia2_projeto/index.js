@@ -1,39 +1,116 @@
 import express from 'express'
-import { livrosCadastrados } from "./livros-controller.js";
+import { cadastrarLivro, livrosCadastrados, consulta, atualizarInformacao} from "./livros-controller.js";
 
 const app = express()
 
 const port = 3000
 
+app.use(express.json())
 app.get('/livros', async (req, res) => {
-    let listaLivros = livrosCadastrados()
-    const {titulo, autor, ano, genero} = req.query
-    titulo = titulo.toString()
-    autor = autor.toString()
-    ano = parseInt(ano)
-    genero = genero.toString()
+    let listaLivros = await livrosCadastrados()
+    let {id, titulo, autor, ano, genero} = req.query
+    if (id) {
+        id = parseInt(id)
+        listaLivros = listaLivros.filter(l => l.id === id)
+    }
     if (titulo) {
-        listaLivros = listaLivros.filter(titulo => l.titulo === titulo)
+        listaLivros = listaLivros.filter(l => l.titulo === titulo)
     }
 
     if (autor) {
-        listaLivros = listaLivros.filter(autor => l.listaLivros === autor)
+        listaLivros = listaLivros.filter(l => l.autor === autor)
     }
 
     if (ano) {
-        listaLivros = listaLivros.filter(ano => l.listaLivros === ano)
+        ano = parseInt(ano)
+        listaLivros = listaLivros.filter(l => l.ano === ano)
     }
 
     if (genero) {
-        listaLivros = listaLivros.filter(genero => l.listaLivros === genero)
+        listaLivros = listaLivros.filter(l => l.genero === genero)
+    }
+    if (listaLivros.length>=1) {
+        res.json(listaLivros)
+    }
+    res.status(404).send('Livro não encontrado')
+})
+
+
+app.get('/livros/:id', async (req, res) => {
+    const id = parseInt(req.params.id)
+    const verificacaoConsultaa = await consulta(id)
+    console.log(verificacaoConsultaa)
+    if (verificacaoConsultaa.length === 0) {
+        res.status(404).send(`Livro com o ID "${id}" não encontrado!`)
+    }
+    res.json(verificacaoConsultaa)
+
+})
+
+app.post('/livros', async (req, res) => {
+    const {titulo, autor, ano, genero, quantidade_estoque} = req.body
+    if (!titulo || titulo.trim() === '') {
+        res.status(400).send('Erro, campo "título" não pode ser vazio!')
     }
 
-    res.json(listaLivros)
+    if (!autor || autor.trim() === '') {
+        res.status(400).send('Erro, campo "autor" não pode ser vazio!')
+    }
+
+    if (!ano) {
+        res.status(400).send('Erro, campo "ano" não pode ser vazio!')
+    }
+
+    if (!genero || genero.trim() === '') {
+        res.status(400).send('Erro, campo "genero" não pode ser vazio!')
+    }
+
+    if (!quantidade_estoque || quantidade_estoque < 0) {
+        res.status(400).send('Campo "quantidade_estoque" está com erro!')
+    }
+    await cadastrarLivro(titulo, autor, ano, genero, quantidade_estoque)
+    res.status(201).send(`Livro "${titulo}" cadastrado com sucesso!`)
+
 })
+
+app.put('/livros/:id', async (req, res) => {
+    const id = parseInt(req.params.id)
+    const titulo = req.body.titulo
+    const autor = req.body.autor
+    const ano = req.body.ano
+    const genero = req.body.genero
+    const quantidade_estoque = req.body.quantidade_estoque
+    let campo = ''
+    if (titulo || titulo.trim() !== '') {
+        campo = 'titulo'
+    }
+
+    // if (!autor || autor.trim() === '') {
+    //     res.status(400).send('Erro, campo "autor" não pode ser vazio!')
+    // }
+
+    // if (!ano) {
+    //     res.status(400).send('Erro, campo "ano" não pode ser vazio!')
+    // }
+
+    // if (!genero || genero.trim() === '') {
+    //     res.status(400).send('Erro, campo "genero" não pode ser vazio!')
+    // }
+
+    // if (!quantidade_estoque || quantidade_estoque < 0) {
+    //     res.status(400).send('Campo "quantidade_estoque" está com erro!')
+    // }
+    // const verificacaoConsultaa = await consulta(id)
+    // if (verificacaoConsultaa.length === 0){
+    //     res.status(404).send(`Livro com o ID "${id}" não encontrado!`)
+    // }
+    const atualizacao = await atualizarInformacao(titulo, id, campo)
+
+    res.json(atualizacao)
+})
+
 
 app.listen(port, async () => {
     console.log('Servidor rodando na porta -> ', port)
 
 })
-
-//GET /livros: lista todos os livros ou filtra por título, autor, ano ou gênero (usando query params).

@@ -1,3 +1,4 @@
+import { authPlugins } from 'mysql2';
 import { conexao } from './conexao.js';
 
 export const livrosCadastrados = async () => {
@@ -6,7 +7,7 @@ export const livrosCadastrados = async () => {
             id int primary key auto_increment,
             titulo varchar(150) not null,
             autor varchar(150) not null,
-            ano date not null,
+            ano int not null,
             genero varchar(80) not null,
             quantidade_estoque int not null
         )`
@@ -17,8 +18,42 @@ export const livrosCadastrados = async () => {
     return tabela
 }
 
-export const listarLivros = async(livros) => {
-    
+
+export const consulta = async (id) => {
+    const [livroConsulta] = await conexao.execute(
+        `select * from livros
+        where id = ?`,
+        [id]
+    )
+    return livroConsulta
+}
+
+export const cadastrarLivro = async(titulo, autor, ano, genero, quantidade_estoque) => {
+    await livrosCadastrados()
+    titulo = titulo.toString()
+    autor = autor.toString()
+    genero = genero.toString()
+    ano = parseInt(ano)
+    quantidade_estoque = parseInt(quantidade_estoque)
+
+    const [insert] = await conexao.execute(
+        `insert into livros (titulo, autor, ano, genero, quantidade_estoque)
+        values (?, ?, ?, ?, ?)`,
+        [titulo, autor, ano, genero, quantidade_estoque]
+    )
+    return insert
+}
+
+export const atualizarInformacao = async (informacao, id, campo) => {
+    console.log(informacao)
+    console.log(id)
+    console.log(campo)
+    const [atualizar] = await conexao.execute(
+        `update livros set (?) = ?
+        where id = ?`,
+        [campo,informacao,id]
+    )
+    console.log(atualizar)
 }
 
 
@@ -31,13 +66,11 @@ export const listarLivros = async(livros) => {
 
 // 1. Banco de Dados: -> feito
 
-// 2. Endpoints obrigatórios (Express):
+// GET /livros: lista todos os livros ou filtra por título, autor, ano ou gênero (usando query params). -> feito
 
-// GET /livros: lista todos os livros ou filtra por título, autor, ano ou gênero (usando query params).
+// GET /livros/:id: mostra os dados de um único livro. -> feito
 
-// GET /livros/:id: mostra os dados de um único livro.
-
-// POST /livros: cadastra um novo livro.
+// POST /livros: cadastra um novo livro. -> feito
 
 // PUT /livros/:id: atualiza qualquer informação de um livro.
 
