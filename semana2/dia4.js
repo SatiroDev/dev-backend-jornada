@@ -1,5 +1,5 @@
 import express from "express"
-import jwt from "jsonwetoken"
+import jwt from "jsonwebtoken"
 import bodyParser from "body-parser"
 
 const app = express()
@@ -20,11 +20,38 @@ app.post('/login', async (req, res) => {
     if (!usuario) {
         return res.status(401).send('Usuário ou senha inválidos!')
     }
-
-    const token = jwt.sign({id: usuario.id, nome: usuario.nome}, secret_key, {expiresIN: '1h'})
+    const token = jwt.sign({id: usuario.id, nome: usuario.nome}, secret_key, {expiresIn: '1h'})
     res.json({token})
 })
 
+// Middleware para proteger rotas
+
+const validarToken = async (req, res, next) => {
+    const authHeader = req.headers['authorization']
+    if (!authHeader) {
+        return res.status(401).send('Token não fornecido!')
+    }
+
+    const token = authHeader.split(' ')[1]
+    if (!token) {
+        return res.status(401).send('Token ausente!')
+    }
+
+    jwt.verify(token, secret_key, (err, user) => {
+        if (err) {
+            return res.status(403).send('Token inválido!')
+        }
+
+        req.user = user
+        next()
+    })
+}
+
+// Rota protegida - só acessível com token válido
+
+app.get('/dados-protegidos', validarToken, async (req, res) => {
+    res.send(`Olá. ${req.user.nome}! Esses dados são protegidos,`)
+})
 
 app.listen(port, async () => {
     console.log(`Servidor rodando na porta ${port}`)
