@@ -1,8 +1,7 @@
 import express from "express"
 import jwt from "jsonwebtoken"
 import bodyParser from "body-parser"
-import { usuarios, cadastrarUser } from "./usuarios-controller.js"
-import bcrypt from 'bcrypt'
+import { usuarios, cadastrarUser, senhaCompare } from "./usuarios-controller.js"
 
 const app = express()
 app.use(bodyParser.json())
@@ -10,7 +9,7 @@ const port = 3000
 const secret_key = 'da8S*%#%@dwsdaw#%'
 
 
-app.post('/criar_user', async (req, res) => {
+app.post('/cadastro', async (req, res) => {
     const {nome, senha} = req.body
 
     if (!nome || nome.trim()==='') {
@@ -20,20 +19,45 @@ app.post('/criar_user', async (req, res) => {
         return res.status(401).send('Senha não pode ser vazia')
     }
 
-    const adicionarUser = cadastrarUser(nome, senha)
+    const adicionarUser = cadastrarUser(nome.toString(), senha.toString())
     res.send(`Usuário "${nome}" adicionado com sucesso!`)
 })
 app.post('/login', async (req, res) => {
     const {nome, senha} = req.body
-    const usuarios = await usuarios()
-    const usuario = usuarios.find(u => u.nome === nome && u.senha === senha)
+    const usuarios_cadastrados = await usuarios()
+    const senhacompare = await senhaCompare(nome.toString(), senha.toString()) 
+    const usuario = usuarios_cadastrados.find(u => u.nome === nome.toString() && senhacompare === true)
     if (!usuario) {
         return res.status(401).send('Usuário ou senha inválidos!')
     }
-    const token = jwt.sign({id: usuario.id, nome: usuario.senha}, secret_key, {expiresIn: '1h'})
+    const token = jwt.sign({id: usuario.id, nome: usuario.nome}, secret_key, {expiresIn: '1h'})
     res.json({token})
 })
 
+const validarToken = async(req, res, next) => {
+    const authHeader = req.headers['authorization']
+
+    if (!authHeader) {
+        return res.status(401).send('Token não fornecido')
+    }
+
+    const token = authHeader.split(' ')[1]
+    if (!token) {
+        return res.status(401).send('Token ausente!')
+    }
+
+    jwt.verify(token, secret_key, (err, user) => {
+        if (err) {
+            return res.status(403).send('Token inválido!')
+        }
+        req.user = user
+        next()
+    })
+}
+
+app.get('/perfil', validarToken, async (req, res) => {
+    res.send(`Nome de usuário: ${req.user.nome} | ID do usuário: ${req.user.id}`)
+})
 app.listen(port, async () => {
     console.log(`Servidor rodando na porta ${port}`)
 })

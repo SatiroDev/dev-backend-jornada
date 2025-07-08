@@ -29,6 +29,21 @@ export const cadastrarUser = async (nome, senha) => {
     return insert
 }
 
+export const senhaCompare = async (nome, senha) => {
+    const users = await usuarios()
+    for (let i = 0; i < users.length; i++) {
+        let usuario = users[i]
+        if (usuario.nome === nome) {
+            const verificacaoSenha = await bcrypt.compare(senha, usuario.senha)
+            if (verificacaoSenha) {
+                return true
+            }
+        }
+    }
+    return false
+} 
+
+
 
 // 🔐 Desafio — Autenticação com JWT e Banco de Dados
 // 🎯 Objetivo:
