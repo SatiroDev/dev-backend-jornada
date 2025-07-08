@@ -2,7 +2,7 @@ import express from "express"
 import jwt from "jsonwebtoken"
 import bodyParser from "body-parser"
 import { usuarios, cadastrarUser, senhaCompare } from "./usuarios-controller.js"
-
+import { setupBanco } from "./setup.js"
 const app = express()
 app.use(bodyParser.json())
 const port = 3000
@@ -15,22 +15,20 @@ app.post('/cadastro', async (req, res) => {
     if (!nome || nome.trim()==='') {
         return res.status(401).send('Nome de usuário não pode está vazio!')
     }
-    if (!senha || nome.trim()===''){
+    if (!senha || senha.trim()===''){
         return res.status(401).send('Senha não pode ser vazia')
     }
 
-    const adicionarUser = cadastrarUser(nome.toString(), senha.toString())
+    const adicionarUser = await cadastrarUser(nome.toString(), senha.toString())
     res.send(`Usuário "${nome}" adicionado com sucesso!`)
 })
 app.post('/login', async (req, res) => {
     const {nome, senha} = req.body
-    const usuarios_cadastrados = await usuarios()
     const senhacompare = await senhaCompare(nome.toString(), senha.toString()) 
-    const usuario = usuarios_cadastrados.find(u => u.nome === nome.toString() && senhacompare === true)
-    if (!usuario) {
+    if (!senhacompare) {
         return res.status(401).send('Usuário ou senha inválidos!')
     }
-    const token = jwt.sign({id: usuario.id, nome: usuario.nome}, secret_key, {expiresIn: '1h'})
+    const token = jwt.sign({id: senhacompare.id, nome: senhacompare.nome}, secret_key, {expiresIn: '1h'})
     res.json({token})
 })
 
@@ -59,6 +57,7 @@ app.get('/perfil', validarToken, async (req, res) => {
     res.send(`Nome de usuário: ${req.user.nome} | ID do usuário: ${req.user.id}`)
 })
 app.listen(port, async () => {
+    await setupBanco()
     console.log(`Servidor rodando na porta ${port}`)
 })
 // 📥 Rotas:

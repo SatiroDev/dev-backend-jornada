@@ -3,13 +3,6 @@ import bcrypt from 'bcrypt'
 
 
 export const usuarios = async () => {
-    const [criar_tabela] = await conexao.execute(
-        `create table if not exists usuarios (
-            id int primary key auto_increment,
-            nome varchar(200) not null,
-            senha varchar(255) not null
-        )`
-    )
     const [tabela] = await conexao.execute(
         'select * from usuarios'
     )
@@ -17,7 +10,6 @@ export const usuarios = async () => {
 } 
 
 export const cadastrarUser = async (nome, senha) => {
-    await usuarios()
     const senhaHash = await bcrypt.hash(senha, 10)
 
     const [insert] = await conexao.execute(
@@ -25,7 +17,6 @@ export const cadastrarUser = async (nome, senha) => {
         values (?, ?)`,
         [nome, senhaHash]
     )
-    console.log(insert)
     return insert
 }
 
@@ -36,12 +27,13 @@ export const senhaCompare = async (nome, senha) => {
         if (usuario.nome === nome) {
             const verificacaoSenha = await bcrypt.compare(senha, usuario.senha)
             if (verificacaoSenha) {
-                return true
+                return usuario
             }
         }
     }
     return false
 } 
+
 
 
 
