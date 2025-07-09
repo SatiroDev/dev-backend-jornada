@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken'
 
 const secret_key = 'chaveSuperSecreta'
 
-export const validarToken = (res, res, next) => {
+export const validarToken = (req, res, next) => {
     const authHeader = req.headers['authorization']
     const token = authHeader?.split(' ')[1] // verifica se authHeader não é null nem undefined antes de tentar fazer o .split
 
