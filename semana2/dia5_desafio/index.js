@@ -16,6 +16,7 @@ import CadastroUsuario from './routes/cadastroUsuario.js'
 import listProdutos from './routes/listarProdutos.js'
 import cadastrarProduto from './routes/cadastroProduto.js'
 import atualizaProduto from './routes/atualizarProduto.js'
+import deletarProduto from './routes/deletarProduto.js'
 
 const PORT = 3000 
 const app = express()
@@ -31,6 +32,8 @@ app.use('/produtos', listProdutos)
 app.use('/produtos', cadastrarProduto)
 
 app.use('/produtos', atualizaProduto) 
+
+app.use('/produtos', deletarProduto)
 app.listen(PORT, async () => {
     await setupBancoProdutos()
     await setupBancoUsuarios()

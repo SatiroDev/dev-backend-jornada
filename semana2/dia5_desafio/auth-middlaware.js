@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken'
 import { secret_key } from '../secret_key/secretKey.js' 
-const secretKey = secret_key
+
 export const validarToken = async(req, res, next) => {
     const authHeader = req.headers['authorization']
     
@@ -10,7 +10,7 @@ export const validarToken = async(req, res, next) => {
         return res.status(401).send('Token inválido ou mal formatado!')
     }
 
-    jwt.verify(token, secretKey, (err, user) => {
+    jwt.verify(token, secret_key, (err, user) => {
         if (err) return res.status(403).send('Token inválido ou expirado!')
 
         req.user = user

@@ -75,6 +75,20 @@ export const atualizarProduto = async (campos, infos, id, res) => {
     }
 }
 
+export const deletarProduto = async (id, res) => {
+    try {
+        const [deleteProduto] = await conexao.execute(
+            `delete from produtos
+            where id = ?`,
+            [id]
+        )
+        return res.send(`Produto com o ID "${id}" deletado com sucesso!`)
+    } catch (error) {
+        console.log('Erro ao deletar produto ' + error)
+        return res.status(401).send('Erro ao deletar produto ' + error)
+    }
+}
+
 
 // produtos-controller.js
 

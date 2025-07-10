@@ -8,7 +8,7 @@ import jwt from 'jsonwebtoken'
 import { conexao } from './conexao.js'
 import { validacaoNomeSenha } from './validacoes/usuarioSchema.js'
 import { secret_key } from '../secret_key/secretKey.js'
-const secretKey = secret_key
+
 export const listarUsuarios = async () => {
     const [selectTabelaUsuarios] = await conexao.execute(
         `select * from usuarios`
@@ -55,7 +55,7 @@ export const LoginDeUsuario = async (req, res, next) => {
             if(usuario.nome === nome) {
                 const passwordNoHash = await bcrypt.compare(senhaStr, usuario.senha)
                 if (passwordNoHash) {
-                    return res.json(await GerarToken(secretKey, nome, usuario.tipo))
+                    return res.json(await GerarToken(secret_key, nome, usuario.tipo))
                 }
             }
         }
