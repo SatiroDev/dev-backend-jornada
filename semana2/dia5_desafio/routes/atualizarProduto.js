@@ -1,14 +1,16 @@
 import express from 'express'
-import { apenasAdmin, atualizarProduto} from '../produtos-controller.js'
+import { apenasAdmin, atualizarProduto, listarProdutos} from '../produtos-controller.js'
 import { validarToken } from '../auth-middlaware.js'
-// import { verificacaoId } from '../usuarios-controller.js'
 
 const router = express.Router()
 
-router.put('/', validarToken, apenasAdmin, async (req, res) => {
-    console.log('al')
-    const id = parseInt(req.params.id)
-    console.log('aqq')
+router.put('/:id', validarToken, apenasAdmin, async (req, res) => {
+    const id =  parseInt(req.params.id)
+    const produtos = await listarProdutos()
+    const id_verificacao = produtos.find(p => p.id === id)
+    if (!id_verificacao) {
+        return res.status(400).send(`Produto com o ID "${id}" não encontrado!`)
+    }
     const {nome, preco, categoria,  quantidade_estoque} = req.body
     let campo = []
     let informacoes = []
@@ -37,10 +39,6 @@ router.put('/', validarToken, apenasAdmin, async (req, res) => {
         campo.push("disponivel")
         
     }
-    // const verificarId = await verificacaoId(req.user.id)
-    // if (verificarId.length === 0){
-    //     return res.status(404).send(`Usuário com o ID "${id}" não encontrado!`)
-    // }
     await atualizarProduto(campo, informacoes, id, res)
 })
 

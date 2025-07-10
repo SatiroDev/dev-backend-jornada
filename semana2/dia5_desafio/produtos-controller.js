@@ -12,10 +12,8 @@ export const listarProdutos = async () => {
 
 export const apenasAdmin = async (req, res, next) => {
     if (req.user.tipo.toLowerCase() !== 'admin') {
-        console.log('Nao admin')
         return res.status(403).send('Função apenas para admins!')
     }
-    console.log('uaii')
     next()
 }
 
@@ -55,10 +53,9 @@ export const cadastroProduto = async (req, res) => {
 
 export const atualizarProduto = async (campos, infos, id, res) => {
     try {
-        console.log('chegou aq')
         let verificacaoQuantidade = 0
         for (let i = 0; i < campos.length; i++) {
-            const [updateInformacoes] = conexao.execute(
+            const [updateInformacoes] = await conexao.execute(
                 ` update produtos set ${campos[i]} = ?
                 where id = ?`,
                 [infos[i], id]

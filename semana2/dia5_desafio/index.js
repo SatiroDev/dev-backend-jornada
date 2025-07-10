@@ -30,7 +30,7 @@ app.use('/produtos', listProdutos)
 
 app.use('/produtos', cadastrarProduto)
 
-app.use('produtos/:id', atualizaProduto)
+app.use('/produtos', atualizaProduto) 
 app.listen(PORT, async () => {
     await setupBancoProdutos()
     await setupBancoUsuarios()
