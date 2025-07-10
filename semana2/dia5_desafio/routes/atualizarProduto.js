@@ -24,7 +24,7 @@ router.put('/:id', validarToken, apenasAdmin, async (req, res) => {
         campo.push("preco")
     }
 
-    if (categoria && categoria.trim !== '') {
+    if (categoria && categoria.trim() !== '') {
         informacoes.push(categoria)
         campo.push("categoria")
     }
