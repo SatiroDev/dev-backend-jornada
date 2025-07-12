@@ -60,33 +60,3 @@ app.listen(port, async () => {
     await setupBanco()
     console.log(`Servidor rodando na porta ${port}`)
 })
-// 📥 Rotas:
-// POST /login
-
-// Recebe nome e senha no body
-
-// Verifica se o usuário existe no banco
-
-// Se estiver correto, gera e retorna um JWT
-
-// GET /perfil
-
-// Rota protegida por middleware
-
-// Requer token no header Authorization
-
-// Retorna o nome e o id do usuário autenticado
-
-// (Bônus) POST /cadastro
-
-// Permite criar novos usuários (salva no banco)
-
-// A senha deve ser criptografada com bcrypt
-
-// 🧪 Dicas:
-// Use jsonwebtoken, mysql2 e bcrypt
-
-// Teste com Postman (Authorization → Bearer Token)
-
-// Use express.json() e organize bem os arquivos (ex: conexao.js, auth-controller.js, etc.)
-
